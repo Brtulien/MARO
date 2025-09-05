@@ -1017,7 +1017,7 @@ def check_text(text):
 
 def think_chain_for_INS(New_INS,all_report,sample_example,Pre_labels):
   Judger = ChatGPTClient(prompt = New_INS, temperature=0) 
-  all_reports = "**sample_example*** " + sample_example[:3000] + "***Analysis Report***"+ all_report[:500]
+  all_reports = "**sample_example*** " + sample_example[:] + "***Analysis Report***"+ all_report[:]
 
   result = Judger.chat(all_reports)
   result_temp = extract_final_result(result)
@@ -1107,7 +1107,7 @@ def optimize_INS(select_class, INS_list, INS_filename, all_apis):
             print("*****************")
             print(Reluer_input)
             print("*****************")
-            Reluer = ChatGPTClientRuler(prompt="""You are a good rule-generator. """, temperature=1)
+            Reluer = ChatGPTClientRuler(prompt=""" """, temperature=)
             New_INS = Reluer.chat(Reluer_input)
             try:
                 New_INS = ' '.join(New_INS.splitlines())
@@ -1140,8 +1140,8 @@ def optimize_INS(select_class, INS_list, INS_filename, all_apis):
                    continue 
                 select_report = (all_report[all_report['idx'] == int(example_index)]["cases"].values)[0]
                 batch_example_format = query_format(batch_example)
-                while(count_tokens(New_INS)+count_tokens(select_report)+count_tokens(batch_example_format))>15800:
-                  batch_example = get_sample_example(select_class)[0][:1000]
+                while(count_tokens(New_INS)+count_tokens(select_report)+count_tokens(batch_example_format))>:
+                  batch_example = get_sample_example(select_class)[0][:]
                   batch_example_format = query_format(batch_example)
                 think_chain_for_INS(New_INS, select_report, batch_example_format, Pre_labels)
             except:
@@ -1151,8 +1151,8 @@ def optimize_INS(select_class, INS_list, INS_filename, all_apis):
                 all_report = all_class_reports.get(example_index_class)
                 select_report = (all_report[all_report['idx'] == int(example_index)]["cases"].values)[0]
                 batch_example_format = query_format(batch_example)
-                while(count_tokens(New_INS)+count_tokens(select_report)+count_tokens(batch_example_format))>15800:
-                  batch_example = get_sample_example(select_class)[0][:1000]
+                while(count_tokens(New_INS)+count_tokens(select_report)+count_tokens(batch_example_format))>:
+                  batch_example = get_sample_example(select_class)[0][:]
                   batch_example_format = query_format(batch_example)
                 think_chain_for_INS(New_INS, select_report, batch_example_format, Pre_labels)
                 
